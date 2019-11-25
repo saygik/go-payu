@@ -1,12 +1,35 @@
 package main
 
 import (
+	"github.com/crgimenes/goconfig"
+	_ "github.com/crgimenes/goconfig/json"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
-	"os"
+	"github.com/nuveo/log"
 	//"os/user"
 )
+
+type mailConfig struct {
+	User     string `cfgRequired:"true"`
+	Password string `cfgRequired:"true"`
+	Server   string `cfgRequired:"true"`
+	Port     int    `cfgDefault:"587"`
+	MailTo   string `cfgRequired:"true"`
+}
+type payUConfig struct {
+	ClientID      string `cfgRequired:"true"`
+	Secret        string `cfgRequired:"true"`
+	PayUBase      string `cfgDefault:"https://secure.snd.payu.com" cfgRequired:"true"`
+	MerchantPosId string `cfgRequired:"true"`
+}
+
+type ConfigApp struct {
+	AppPort  string `cfgDefault:":80" cfgRequired:"true"`
+	Mail     mailConfig
+	PayU     payUConfig
+	IgnoreMe string `cfg:"-"`
+}
 
 //CORSMiddleware ...
 func CORSMiddleware() gin.HandlerFunc {
@@ -29,7 +52,22 @@ func CORSMiddleware() gin.HandlerFunc {
 	}
 }
 
+var AppConfig = ConfigApp{}
+
 func main() {
+	//	var config *configApp
+	goconfig.File = "config.json"
+	err := goconfig.Parse(&AppConfig)
+
+	if err != nil {
+		//	log.Fatal("Config Error")
+		log.Fatal(err)
+		return
+	}
+	// ***************** Print App config ******************
+	//j, _ := json.MarshalIndent(Config, "", "\t")
+	//log.Println(string(j))
+
 	gin.SetMode(gin.DebugMode)
 	//gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
@@ -39,21 +77,23 @@ func main() {
 	r.Use(CORSMiddleware())
 	r.Use(sessions.Sessions("gin-boilerplate-session", store))
 	//	r.LoadHTMLGlob("./public/html/*")
-	gopath := os.Getenv("GOPATH")
-	if gopath == "" {
-		gopath = "/root/go"
-	}
+	//gopath := os.Getenv("GOPATH")
+	//if gopath == "" {
+	//	gopath = "/root/go"
+	//}
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{"Code": "200", "Message": "Welcome to API go-payu"})
 	})
 	r.POST("/notify", setNotify)
 
 	r.GET("/auth", getAuth)
+
+	r.GET("/mail", sendMail)
 	r.POST("/orders", createOrder)
 
 	r.NoRoute(NoRoute)
 
-	r.Run(":80")
+	r.Run(AppConfig.AppPort)
 }
 func NoRoute(c *gin.Context) {
 	c.JSON(404, gin.H{"Code": "404", "Message": "Not Found"})

@@ -1,0 +1,17 @@
+{
+  "Mail": {
+    "User":     "crystalrentalcarsender@gmail.com",
+    "Password": "qwe123QWE@",
+    "Server":   "smtp.gmail.com",
+    "Port":     587,
+    "MailTo":   "filialsys@tut.by"
+
+  },
+  "PayU": {
+    "ClientID": "369722",
+    "Secret": "aa3272c123df4a43b3d26e4b4794c0c1",
+    "PayUBase": "https://secure.snd.payu.com",
+    "MerchantPosId": "369722"
+  }
+}
+

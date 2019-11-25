@@ -3,15 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/saygik/go-payu/firebase"
 	"github.com/saygik/go-payu/payu"
 )
 
-// OAuth protocol - client_id :	369722
-// OAuth protocol - client_secret:	aa3272c123df4a43b3d26e4b4794c0c1
 func getAuth(c *gin.Context) {
 
 	fmt.Println("------------------")
-	client := payu.NewClient("369722", "aa3272c123df4a43b3d26e4b4794c0c1", payu.APIBaseSandBox)
+	client := payu.NewClient(AppConfig.PayU.ClientID, AppConfig.PayU.Secret, AppConfig.PayU.PayUBase)
 	accessToken, err := client.GetAccessToken()
 
 	if err != nil {
@@ -22,16 +21,11 @@ func getAuth(c *gin.Context) {
 }
 
 func setNotify(c *gin.Context) {
-	//bodyBytes, _ := c.GetRawData()
-	//bodyString := string(bodyBytes)
-	//
-	//fmt.Printf("%q", bodyString)
 	fmt.Println("------------------")
 	var PayuNotifyer payu.PayuNotifyer
 	c.BindJSON(&PayuNotifyer)
-	//	fmt.Println(PayuNotifyer)
 	fmt.Println("Payment status: %s", PayuNotifyer.Order.Status)
-
+	_ = firebase.UpdateOrderStatus(PayuNotifyer)
 	if PayuNotifyer.Order.Status != "COMPLETED" {
 		c.JSON(202, gin.H{"Message": "Ok"})
 	} else {
@@ -41,15 +35,21 @@ func setNotify(c *gin.Context) {
 func createOrder(c *gin.Context) {
 
 	fmt.Println("------------------")
-	client := payu.NewClient("369722", "aa3272c123df4a43b3d26e4b4794c0c1", payu.APIBaseSandBox)
+	payuClient := payu.NewClient(AppConfig.PayU.ClientID, AppConfig.PayU.Secret, AppConfig.PayU.PayUBase)
 
 	//	accessToken, err := client.CreatePayment(p)
 	var payOrder payu.Order
 	c.BindJSON(&payOrder)
-	v, err := client.CreateOrder(payOrder)
+	payOrder.MerchantPosId = AppConfig.PayU.MerchantPosId
+	v, err := payuClient.CreateOrder(payOrder)
 	if err != nil {
 		c.JSON(400, gin.H{"Message": fmt.Sprintf("Could not create order"), "Error": "No order"})
 	} else {
-		c.JSON(200, gin.H{"data": v})
+		err = firebase.UpdateOrder(v.ExtOrderId, "SEND_TO_PAYU")
+		if err != nil {
+			c.JSON(400, gin.H{"Message": fmt.Sprintf("Could not update order in firebase")})
+		} else {
+			c.JSON(200, gin.H{"data": v})
+		}
 	}
 }

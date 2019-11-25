@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "crystal-rental-car",
+  "private_key_id": "2e0f2f1f33b77393c456926124ae24df0e22adf7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDYkmaLsI6kDOnZ\nZ6Eb4b65Ch1f+ti4o6iofH4zRaBaGbazqFBFa6/mnM5DKgKzhNr9Oo2wmmOr0M3h\nd7xVNoW/M8mpeAL/XdR9ZTNnhi8KWtnLE/47EAL7dM9LRe8KQA73C+ttoOgYNPM+\nQaj2GVqwjWFXE01brkekLr630f2KG/SoXpi09OUFmJ2hxvCdVu5BLv1K+luA3SYj\n9CGlKIevOro0KcWMU2LzRGsiQWQXL7D0jjTf8YfwZLxrS4FrSrajGnJ+dETTNqpJ\n6YczYZhPMXZUlLmj5eq1QRdijvCk8sZ8NrBhwUzQTc9geWl5yIbAqOHpfwdzfAw5\n/t4Ws8HXAgMBAAECggEARvgSqov88j1ZFGklHmHngfOSlLU696aJykyhfmO+nEf4\n2v6470bOqZ+Q5+mIYROUP49Ehy7QoqkWDmCSUso/IdzypJozQUOaMk1Lfw01tQr4\ne9fdY7VnhMdOdrhAEPfU75f0WkR0Shpv62LQ33SHh3uM/l/Q5c5Co8a9sLcbgnnz\n8cGMn29OWnPrLFfZR0/soZ6FMbqcIaQ8MpBMsNFcBUzpbYcMTuC9weQrWb2czVzU\n+aaG2irb7d8BGP/CJoAZGLCNgM31gFst97uU1ZJJJjXDTEymOQ/PRQnwQJHfPGkS\nXfM1vjceI06hPfOszSYJzY6EEHTWgUWwMVaVS/X8QQKBgQD+wv7c7MhKYXHXIkDI\nrlGfFtmrZCOgAZY5LZDOhHcS48y/I2xNlEVGHwyCMYEXuO/5YkLrx/uipm1N0mvy\nBRE8cghOqU6OFRRf5OCxzipwAfSvOO8IWdSKuWQqr096cNLvfFYsShoVp3XegsIg\n3ML7AhGtmURglMKNY0Tt5Jb5TwKBgQDZn+J+mGYJ3D69VxojjphbyE+cwhQ4CYxH\nnlzZVjb0ElIBzpnIAKxDa1g5EdSUhZ0xIPZDmhwQMXiczNXkGg0LFdNFJUIOfv76\nluP4JCQl3TMg0b3610ZwqYDWQpmIoQY/6OA7ynJ51ifAp00Ea2ZBdk1f5/zGK97P\n9Lt69xd8+QKBgQCXMEep+odexPeXUceakQD1Zc0lzpbpxSdOpYDzXl+AAVqn8DC8\n1YpK8/Arb4+J8YHQwQSwAo2OWDAz5/WRunohIhdV/1oULeRaiGzkeFJtCGwadLI+\nhXkCHsWYI1QKeNxlradCP3O9eBUWSQlGEV1RM0gkevm+S2ouGER23ZrPNwKBgDPi\ni7SVDxbgvNCVmLTLhYW0b063cuydUiWtGwPyKy3rxEOMB1wI1QlJ6YHJv34dkQmq\niyw47OHreY8gwwocL+nprTI6HNKp8o66NOXvb/LbFxqHBx1r/+5Sa1YqEMLjaUMJ\neZSnwr1LkrS67oDUPk/zLaVlAP4abYf1GFHL4Xy5AoGAIuAS3CPQfa/zQz/vhqXN\nojJRlczTb/2+uRJVukH01+4G7XbcygXRH8H5GUiS+H/XPyVGNCK99tnk97UhhJCh\nrYADkL/L1LGQ4cLqRzaFIm/NoQ2R8WW6O/OvpxQwtPeMID/fl8XNNkA7AE5gMYf/\nc3r8N/j660ntloX08qmslyI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "crystal-rental-car-goapi@crystal-rental-car.iam.gserviceaccount.com",
+  "client_id": "116546574660453127047",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/crystal-rental-car-goapi%40crystal-rental-car.iam.gserviceaccount.com"
+}

@@ -9,10 +9,12 @@ type (
 		*Payment
 		Links []Links `json:"links"`
 	}
+
 	CreateOrderResp struct {
 		Status      *Status `json:"status,omitempty"`
 		RedirectUri string  `json:"redirectUri,omitempty"`
 		OrderId     string  `json:"orderId,omitempty"`
+		ExtOrderId  string  `json:"extOrderId,omitempty"`
 	}
 
 	Status struct {
