@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/saygik/go-payu/firebase"
+	"github.com/saygik/go-payu/mailer"
 	"github.com/saygik/go-payu/payu"
 )
 
@@ -24,11 +25,16 @@ func setNotify(c *gin.Context) {
 	fmt.Println("------------------")
 	var PayuNotifyer payu.PayuNotifyer
 	c.BindJSON(&PayuNotifyer)
-	fmt.Println("Payment status: %s", PayuNotifyer.Order.Status)
+	fmt.Println("Payment: %s    status: %s", PayuNotifyer.Order.OrderId, PayuNotifyer.Order.Status)
+	//j, _ := json.MarshalIndent(PayuNotifyer, "", "\t")
+	//log.Println(string(j))
 	_ = firebase.UpdateOrderStatus(PayuNotifyer)
-	if PayuNotifyer.Order.Status != "COMPLETED" {
+
+	if PayuNotifyer.Order.Status != "COMPLETED" && PayuNotifyer.Order.Status != "CANCELED" {
 		c.JSON(202, gin.H{"Message": "Ok"})
 	} else {
+		//PayuNotifyer.Order.Buyer.Email
+		sendPayUMail(PayuNotifyer.Order.Buyer.Email, PayuNotifyer.Order.OrderId, PayuNotifyer.Order.Buyer.FirstName)
 		c.JSON(200, gin.H{"Message": "Ok"})
 	}
 }
@@ -52,4 +58,18 @@ func createOrder(c *gin.Context) {
 			c.JSON(200, gin.H{"data": v})
 		}
 	}
+}
+func sendPayUMail(mailTo string, paymentId string, userName string) bool {
+	fmt.Println("---------sendin eMail")
+
+	subject := "Информация о бронировании автомобиля"
+	mr := mailer.NewMailRequest(AppConfig.Mail.User,
+		AppConfig.Mail.Password,
+		AppConfig.Mail.Server,
+		AppConfig.Mail.Port,
+		[]string{mailTo},
+		subject)
+	return mr.Send("templates/mailtemplate.html",
+		map[string]string{
+			"username": userName, "paymentId": paymentId})
 }

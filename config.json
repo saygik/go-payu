@@ -8,10 +8,9 @@
 
   },
   "PayU": {
-    "ClientID": "369722",
-    "Secret": "aa3272c123df4a43b3d26e4b4794c0c1",
+    "ClientID": "369485",
+    "Secret": "0c21bfc7a5fd8673b637f05385557004",
     "PayUBase": "https://secure.snd.payu.com",
-    "MerchantPosId": "369722"
+    "MerchantPosId": "369485"
   }
 }
-
