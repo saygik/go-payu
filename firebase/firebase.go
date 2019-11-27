@@ -17,6 +17,7 @@ func NewFirestoreClient() (context.Context, *firestore.Client, error) {
 		return nil, nil, err
 	}
 	client, err := app.Firestore(ctx)
+
 	if err != nil {
 		return nil, nil, err
 	}
@@ -89,6 +90,7 @@ func UpdateOrderStatus(payuNotifyer payu.PayuNotifyer) error {
 	}
 	if currentOrderStatus != status && currentOrderStatus != "COMPLETED" {
 		if status == "COMPLETED" {
+			//			payuNotifyer.CreatedAt= firestore.ServerTimestamp
 			_, _, err = client.Collection("complatedOrders").Add(ctx, payuNotifyer)
 			if err != nil {
 				return err
