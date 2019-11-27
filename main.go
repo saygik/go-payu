@@ -11,17 +11,17 @@ import (
 )
 
 type mailConfig struct {
-	User     string `cfgRequired:"true"`
-	Password string `cfgRequired:"true"`
-	Server   string `cfgRequired:"true"`
-	Port     int    `cfgDefault:"587"`
-	MailTo   string `cfgRequired:"true"`
+	User     string `cfgDefault:"crystalrentalcarsender@gmail.com" cfgRequired:"true"`
+	Password string `cfgDefault:"qwe123QWE@" cfgRequired:"true"`
+	Server   string `cfgDefault:"smtp.gmail.com" cfgRequired:"true"`
+	Port     int    `cfgDefault:"587" cfgDefault:"587"`
+	MailTo   string `cfgDefault:"def@def.by" cfgRequired:"true"`
 }
 type payUConfig struct {
-	ClientID      string `cfgRequired:"true"`
-	Secret        string `cfgRequired:"true"`
+	ClientID      string `cfgDefault:"369485" cfgRequired:"true"`
+	Secret        string `cfgDefault:"0c21bfc7a5fd8673b637f05385557004" cfgRequired:"true"`
 	PayUBase      string `cfgDefault:"https://secure.snd.payu.com" cfgRequired:"true"`
-	MerchantPosId string `cfgRequired:"true"`
+	MerchantPosId string `cfgDefault:"369485" cfgRequired:"true"`
 }
 
 type ConfigApp struct {
@@ -56,7 +56,7 @@ var AppConfig = ConfigApp{}
 
 func main() {
 	//	var config *configApp
-	goconfig.File = "config/config.json"
+	//	goconfig.File = "config/config.json"
 	err := goconfig.Parse(&AppConfig)
 
 	if err != nil {

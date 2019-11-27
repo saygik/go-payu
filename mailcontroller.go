@@ -16,7 +16,7 @@ func sendMail(c *gin.Context) {
 		AppConfig.Mail.Port,
 		[]string{AppConfig.Mail.MailTo},
 		subject)
-	mailResult := mr.Send("config/mailtemplate.html",
+	mailResult := mr.Send("templates/mailtemplate.html",
 		map[string]string{
 			"username": "Conor", "paymentId": "7W76JLH6XQ191124GUEST000P01"})
 
