@@ -1,0 +1,9 @@
+runtime: go
+env: flex
+api_version: 1
+skip_files:
+- README.md
+handlers:
+  - url: /templates
+    static_dir: templates
+    application_readable: true
