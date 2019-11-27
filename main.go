@@ -56,7 +56,7 @@ var AppConfig = ConfigApp{}
 
 func main() {
 	//	var config *configApp
-	goconfig.File = "config.json"
+	goconfig.File = "config/config.json"
 	err := goconfig.Parse(&AppConfig)
 
 	if err != nil {
