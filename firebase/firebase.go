@@ -85,13 +85,15 @@ func UpdateOrderStatus(payuNotifyer payu.PayuNotifyer) error {
 	snapshotData := snapshot.Data()
 	currentOrderStatus := snapshotData["status"]
 	currentCarId := snapshotData["carId"]
+	startDate := snapshotData["startDate"]
+	endDate := snapshotData["endDate"]
 	if currentOrderStatus == nil {
 		err := fmt.Errorf("Not status for order with id %s", orderId)
 		return err
 	}
 	if currentOrderStatus != status && currentOrderStatus != "COMPLETED" {
 		if status == "COMPLETED" {
-			//			payuNotifyer.CreatedAt= firestore.ServerTimestamp
+			//						ss:= firestore.ServerTimestamp
 			ref := client.Collection("complatedOrders").NewDoc()
 
 			// later...
@@ -102,6 +104,8 @@ func UpdateOrderStatus(payuNotifyer payu.PayuNotifyer) error {
 			_, err = ref.Set(ctx, map[string]interface{}{
 				"createdAt": firestore.ServerTimestamp,
 				"carId":     currentCarId,
+				"startDate": startDate,
+				"endDate":   endDate,
 			}, firestore.MergeAll)
 
 			//			_, _, err = client.Collection("complatedOrders").Add(ctx, payuNotifyer)
