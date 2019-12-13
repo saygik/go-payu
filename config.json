@@ -1,4 +1,12 @@
 {
+  "MailCars": {
+    "User":     "",
+    "Password": "",
+    "Server":   "smtp.gmail.com",
+    "Port":     587,
+    "MailTo":   "filialsys@tut.by"
+
+  },
   "Mail": {
     "User":     "crystalrentalcarsender@gmail.com",
     "Password": "qwe123QWE@",

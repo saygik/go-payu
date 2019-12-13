@@ -10,6 +10,13 @@ import (
 	//"os/user"
 )
 
+type mailConfigCars struct {
+	User     string `cfgDefault:"mag.sieg65878@gmail.com" cfgRequired:"true"`
+	Password string `cfgDefault:"LKNHIUYUYR76576rFR576dY&$%^$&%657rfgfdyr&$^%$^%e6" cfgRequired:"true"`
+	Server   string `cfgDefault:"smtp.gmail.com" cfgRequired:"true"`
+	Port     int    `cfgDefault:"587" cfgDefault:"587"`
+	MailTo   string `cfgDefault:"def@def.by" cfgRequired:"true"`
+}
 type mailConfig struct {
 	User     string `cfgDefault:"crystalrentalcarsender@gmail.com" cfgRequired:"true"`
 	Password string `cfgDefault:"qwe123QWE@" cfgRequired:"true"`
@@ -27,6 +34,7 @@ type payUConfig struct {
 type ConfigApp struct {
 	AppPort  string `cfgDefault:":80" cfgRequired:"true"`
 	Mail     mailConfig
+	MailCars mailConfigCars
 	PayU     payUConfig
 	IgnoreMe string `cfg:"-"`
 }
@@ -89,6 +97,7 @@ func main() {
 	r.GET("/auth", getAuth)
 
 	r.GET("/mail", sendMail)
+	r.POST("/mailCars", sendMail)
 	r.POST("/orders", createOrder)
 
 	r.NoRoute(NoRoute)
