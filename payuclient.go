@@ -28,13 +28,17 @@ func setNotify(c *gin.Context) {
 	fmt.Println("Payment: %s    status: %s", PayuNotifyer.Order.OrderId, PayuNotifyer.Order.Status)
 	//j, _ := json.MarshalIndent(PayuNotifyer, "", "\t")
 	//log.Println(string(j))
-	_ = firebase.UpdateOrderStatus(PayuNotifyer)
+	startDate, endDate, _ := firebase.UpdateOrderStatus(PayuNotifyer)
 
 	if PayuNotifyer.Order.Status != "COMPLETED" && PayuNotifyer.Order.Status != "CANCELED" {
 		c.JSON(202, gin.H{"Message": "Ok"})
 	} else {
 		//PayuNotifyer.Order.Buyer.Email
-		sendPayUMail(PayuNotifyer.Order.Buyer.Email, PayuNotifyer.Order.OrderId, PayuNotifyer.Order.Buyer.FirstName)
+		if startDate != "" && endDate != "" {
+			sendPayUMail(PayuNotifyer.Order.Buyer.Email, PayuNotifyer.Properties[0].Value, PayuNotifyer.Order.Buyer.FirstName, startDate, endDate)
+		} else {
+			sendPayUMail(PayuNotifyer.Order.Buyer.Email, PayuNotifyer.Properties[0].Value, PayuNotifyer.Order.Buyer.FirstName, "", "")
+		}
 		c.JSON(200, gin.H{"Message": "Ok"})
 	}
 }
@@ -59,7 +63,7 @@ func createOrder(c *gin.Context) {
 		}
 	}
 }
-func sendPayUMail(mailTo string, paymentId string, userName string) bool {
+func sendPayUMail(mailTo string, paymentId string, userName string, startDate string, endDate string) bool {
 	fmt.Println("---------sendin eMail")
 
 	subject := "Информация о бронировании автомобиля"
@@ -71,5 +75,8 @@ func sendPayUMail(mailTo string, paymentId string, userName string) bool {
 		subject)
 	return mr.Send("templates/mailtemplate.html",
 		map[string]string{
-			"username": userName, "paymentId": paymentId})
+			"username":  userName,
+			"startDate": startDate,
+			"endDate":   endDate,
+			"paymentId": paymentId})
 }
