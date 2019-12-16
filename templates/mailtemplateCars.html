@@ -56,6 +56,10 @@
             text-decoration: none;
             font-style: normal;
         }
+        .images {
+            height: 100px;
+            width: 140px;
+        }
     </style>
 </head>
 <body bgcolor="#009587">
@@ -63,7 +67,7 @@
     <tr class="content">
         <td style="padding:10px;">
             <p>
-                Я <b>{{ .username }}</b>, <br/>
+                Я <b>{{ .Name }}</b>, <br/>
             </p>
         </td>
     </tr>
@@ -74,24 +78,58 @@
     </tr>
     <tr class="header">
         <td style="padding: 10px;">
-            Картинки
+        -------------------------------------------------------
         </td>
     </tr>
     <tr class="footer">
         <td style="padding: 40px;">
-            <a href="{{ .img1 }}" target="_blank">{{ .img1 }}</a>
+            <a href="{{ .img1 }}" target="_blank">
+               <img alt="{{ .img1Title }}" src="{{ .img1 }}"  class="images" />
+                {{ .img1Title }}
+            </a>
         </td>
     </tr>
     <tr class="footer">
         <td style="padding: 40px;">
-            <a href="{{ .img2 }}" target="_blank">{{ .img2 }}</a>
+            <a href="{{ .img2 }}" target="_blank">
+                <img alt="{{ .img2Title }}" src="{{ .img2 }}"  class="images" />
+                {{ .img2Title }}
+            </a>
         </td>
     </tr>
     <tr class="footer">
         <td style="padding: 40px;">
-            <a href="{{ .img3 }}" target="_blank">{{ .img3 }}</a>
+            <a href="{{ .img3 }}" target="_blank">
+                <img alt="{{ .img3Title }}" src="{{ .img3 }}"  class="images" />
+                {{ .img3Title }}
+            </a>
         </td>
     </tr>
+    <tr class="footer">
+        <td style="padding: 40px;">
+            <a href="{{ .img4 }}" target="_blank">
+                <img alt="{{ .img4Title }}" src="{{ .img4 }}"  class="images" />
+                {{ .img4Title }}
+            </a>
+        </td>
+    </tr>
+    <tr class="footer">
+        <td style="padding: 40px;">
+            <a href="{{ .img5 }}" target="_blank">
+                <img alt="{{ .img5Title }}" src="{{ .img5 }}"  class="images" />
+                {{ .img5Title }}
+            </a>
+        </td>
+    </tr>
+    <tr class="footer">
+        <td style="padding: 40px;">
+            <a href="{{ .img6 }}" target="_blank">
+                <img alt="{{ .img6Title }}" src="{{ .img6 }}"  class="images" />
+                {{ .img6Title }}
+            </a>
+        </td>
+    </tr>
+
     <tr class="footer">
         <td style="padding: 40px;">
             <a href="http://crystalrentalcar.com" target="_blank">Crystal rental car</a>

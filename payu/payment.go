@@ -65,7 +65,6 @@ func (c *Client) CreateOrder(p Order) (*CreateOrderResp, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return v, nil
 }
 

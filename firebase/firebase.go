@@ -70,17 +70,17 @@ func GetOneCar() error {
 	return nil
 }
 
-func UpdateOrderStatus(payuNotifyer payu.PayuNotifyer) error {
+func UpdateOrderStatus(payuNotifyer payu.PayuNotifyer) (string, string, error) {
 	orderId := payuNotifyer.Order.ExtOrderId
 	status := payuNotifyer.Order.Status
 	ctx, client, err := NewFirestoreClient()
 	defer client.Close()
 	if err != nil {
-		return err
+		return "", "", err
 	}
 	snapshot, err := client.Collection("orders").Doc(orderId).Get(ctx)
 	if err != nil {
-		return err
+		return "", "", err
 	}
 	snapshotData := snapshot.Data()
 	currentOrderStatus := snapshotData["status"]
@@ -89,7 +89,7 @@ func UpdateOrderStatus(payuNotifyer payu.PayuNotifyer) error {
 	endDate := snapshotData["endDate"]
 	if currentOrderStatus == nil {
 		err := fmt.Errorf("Not status for order with id %s", orderId)
-		return err
+		return "", "", err
 	}
 	if currentOrderStatus != status && currentOrderStatus != "COMPLETED" {
 		if status == "COMPLETED" {
@@ -99,7 +99,7 @@ func UpdateOrderStatus(payuNotifyer payu.PayuNotifyer) error {
 			// later...
 			_, err := ref.Set(ctx, payuNotifyer)
 			if err != nil {
-				return err
+				return "", "", err
 			}
 			_, err = ref.Set(ctx, map[string]interface{}{
 				"createdAt": firestore.ServerTimestamp,
@@ -110,17 +110,17 @@ func UpdateOrderStatus(payuNotifyer payu.PayuNotifyer) error {
 
 			//			_, _, err = client.Collection("complatedOrders").Add(ctx, payuNotifyer)
 			if err != nil {
-				return err
+				return "", "", err
 			}
 		}
 		_, err = client.Collection("orders").Doc(orderId).Set(ctx, map[string]interface{}{
 			"status": status,
 		}, firestore.MergeAll)
 		if err != nil {
-			return err
+			return "", "", err
 		}
 	}
-	return nil
+	return fmt.Sprintf("%v", startDate), fmt.Sprintf("%v", endDate), nil
 }
 
 //func UpdateOrderStatus3 (orderId string, status string) error {
